@@ -1,23 +1,41 @@
 import { useAppKitProvider } from "@reown/appkit/vue";
-import { type Address, createPublicClient, createWalletClient, custom, http, publicActions, walletActions } from "viem";
+import { type Address, createPublicClient, createWalletClient, custom, defineChain, http, publicActions, walletActions } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import { zksyncInMemoryNode, zksyncSepoliaTestnet } from "viem/chains";
-import { eip712WalletActions } from "viem/zksync";
+import { chainConfig, eip712WalletActions } from "viem/zksync";
 import { createZksyncPasskeyClient, type PasskeyRequiredContracts } from "zksync-sso/client/passkey";
 import { createZksyncRecoveryGuardianClient } from "zksync-sso/client/recovery";
 
-import eraSepoliaChainData from "./era-sepolia.json";
+// ToDo: rename 'local-node.json' to reflect it's content to something like 'xsolla-zk-sepolia.json'
 import localChainData from "./local-node.json";
 
-export const supportedChains = [zksyncSepoliaTestnet, zksyncInMemoryNode];
+const xsollaZkSepoliaTestnet = defineChain({
+  ...chainConfig,
+  id: 555272,
+  name: "Xsolla ZK Sepolia Testnet",
+  network: "xsolla-zk-sepolia-testnet",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://zkrpc.xsollazk.com"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Xsolla ZK Explorer",
+      url: "https://x.la/explorer",
+      apiUrl: "https://xo-api.hyperscreener.com/api",
+    },
+  },
+  testnet: true,
+});
+
+export const supportedChains = [xsollaZkSepoliaTestnet];
 export type SupportedChainId = (typeof supportedChains)[number]["id"];
 export const blockExplorerUrlByChain: Record<SupportedChainId, string> = {
-  [zksyncSepoliaTestnet.id]: zksyncSepoliaTestnet.blockExplorers.native.url,
-  [zksyncInMemoryNode.id]: "http://localhost:3010",
+  [xsollaZkSepoliaTestnet.id]: xsollaZkSepoliaTestnet.blockExplorers.default.url,
 };
 export const blockExplorerApiByChain: Record<SupportedChainId, string> = {
-  [zksyncSepoliaTestnet.id]: zksyncSepoliaTestnet.blockExplorers.native.blockExplorerApi,
-  [zksyncInMemoryNode.id]: "http://localhost:3020",
+  [xsollaZkSepoliaTestnet.id]: xsollaZkSepoliaTestnet.blockExplorers.default.apiUrl,
 };
 
 type ChainContracts = PasskeyRequiredContracts & {
@@ -25,15 +43,11 @@ type ChainContracts = PasskeyRequiredContracts & {
   accountPaymaster: Address;
 };
 export const contractsByChain: Record<SupportedChainId, ChainContracts> = {
-  [zksyncSepoliaTestnet.id]: eraSepoliaChainData as ChainContracts,
-  [zksyncInMemoryNode.id]: localChainData as ChainContracts,
+  [xsollaZkSepoliaTestnet.id]: localChainData as ChainContracts,
 };
 
 export const chainParameters: Record<SupportedChainId, { blockTime: number }> = {
-  [zksyncSepoliaTestnet.id]: {
-    blockTime: 15,
-  },
-  [zksyncInMemoryNode.id]: {
+  [xsollaZkSepoliaTestnet.id]: {
     blockTime: 1,
   },
 };
