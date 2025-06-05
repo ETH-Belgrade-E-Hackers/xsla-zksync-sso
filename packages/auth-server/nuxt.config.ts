@@ -1,6 +1,8 @@
 import { defineNuxtConfig } from "nuxt/config";
 import { zksyncInMemoryNode, zksyncSepoliaTestnet } from "viem/chains";
 
+import { xsollaZkSepoliaTestnet } from "./xsla";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-07-08",
@@ -18,7 +20,7 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
-      title: "ZKsync SSO",
+      title: "ZKsync SSO - Xsolla ZK Sepolia Testnet",
       link: [
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico", sizes: "32x32" },
         { rel: "icon", type: "image/png", href: "/icon-96x96.png", sizes: "96x96" },
@@ -64,7 +66,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      chainId: parseInt(process.env.NUXT_PUBLIC_DEFAULT_CHAIN_ID || "") || zksyncSepoliaTestnet.id,
+      chainId: parseInt(process.env.NUXT_PUBLIC_DEFAULT_CHAIN_ID || "") || xsollaZkSepoliaTestnet.id,
       [zksyncInMemoryNode.id]: {
         nftQuestAddress: "0x4B5DF730c2e6b28E17013A1485E5d9BC41Efe021",
       },

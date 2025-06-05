@@ -1,33 +1,13 @@
 import { useAppKitProvider } from "@reown/appkit/vue";
-import { type Address, createPublicClient, createWalletClient, custom, defineChain, http, publicActions, walletActions } from "viem";
+import { type Address, createPublicClient, createWalletClient, custom, http, publicActions, walletActions } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import { chainConfig, eip712WalletActions } from "viem/zksync";
+import { eip712WalletActions } from "viem/zksync";
 import { createZksyncPasskeyClient, type PasskeyRequiredContracts } from "zksync-sso/client/passkey";
 import { createZksyncRecoveryGuardianClient } from "zksync-sso/client/recovery";
 
+import { xsollaZkSepoliaTestnet } from "../xsla";
 // ToDo: rename 'local-node.json' to reflect it's content to something like 'xsolla-zk-sepolia.json'
 import localChainData from "./local-node.json";
-
-const xsollaZkSepoliaTestnet = defineChain({
-  ...chainConfig,
-  id: 555272,
-  name: "Xsolla ZK Sepolia Testnet",
-  network: "xsolla-zk-sepolia-testnet",
-  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
-  rpcUrls: {
-    default: {
-      http: ["https://zkrpc.xsollazk.com"],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: "Xsolla ZK Explorer",
-      url: "https://x.la/explorer",
-      apiUrl: "https://xo-api.hyperscreener.com/api",
-    },
-  },
-  testnet: true,
-});
 
 export const supportedChains = [xsollaZkSepoliaTestnet];
 export type SupportedChainId = (typeof supportedChains)[number]["id"];

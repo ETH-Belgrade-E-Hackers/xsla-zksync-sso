@@ -3,7 +3,7 @@ import { registerNewPasskey } from "zksync-sso/client/passkey";
 
 export const usePasskeyRegister = () => {
   const generatePasskeyName = () => {
-    let name = `ZKsync SSO ${(new Date()).toLocaleDateString("en-US")}`;
+    let name = `ZKsync SSO/XSLA ${(new Date()).toLocaleDateString("en-US")}`;
     name += ` ${(new Date()).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
     return name;
   };

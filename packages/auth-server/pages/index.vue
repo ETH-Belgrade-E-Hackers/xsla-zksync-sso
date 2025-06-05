@@ -4,6 +4,8 @@
       class="dark:text-neutral-100 h-16 md:h-20 mb-8"
     />
 
+    <Header>Xsolla ZK Sepolia Testnet</Header>
+
     <div class="flex flex-col gap-5 mt-8 py-8">
       <ZkHighlightWrapper>
         <ZkButton
@@ -52,6 +54,8 @@
 </template>
 
 <script setup lang="ts">
+import Header from "~/components/layout/header.vue";
+
 definePageMeta({
   middleware: ["logged-out"],
 });

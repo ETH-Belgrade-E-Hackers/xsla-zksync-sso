@@ -1,7 +1,7 @@
 <template>
   <div>
     <layout-header>
-      <span class="font-thin">Welcome to ZKsync SSO</span>
+      <span class="font-thin">Welcome to ZKsync SSO - Xsolla ZK Sepolia Testnet</span>
       <template #aside>
         <span class="text-lg text-neutral-500 mr-2">
           {{ shortenAddress(address!) }}
